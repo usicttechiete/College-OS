@@ -1,6 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import AppLayout from './layouts/AppLayout'
 import AuthLayout from './layouts/AuthLayout'
+import ProtectedRoute from './components/ProtectedRoute'
+import GuestRoute from './components/GuestRoute'
 import AccountPage from './pages/AccountPage'
 import FoundFormPage from './pages/FoundFormPage'
 import FoundPage from './pages/FoundPage'
@@ -14,7 +16,14 @@ import SignupPage from './pages/SignupPage'
 function App() {
   return (
     <Routes>
-      <Route element={<AppLayout />}>
+      {/* Protected routes - require authentication */}
+      <Route
+        element={
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<Navigate to="/home" replace />} />
         <Route path="home" element={<HomePage />} />
         <Route path="found" element={<FoundPage />} />
@@ -23,10 +32,19 @@ function App() {
         <Route path="messages" element={<MessagesPage />} />
         <Route path="account" element={<AccountPage />} />
       </Route>
-      <Route element={<AuthLayout />}>
+
+      {/* Guest routes - only accessible when not logged in */}
+      <Route
+        element={
+          <GuestRoute>
+            <AuthLayout />
+          </GuestRoute>
+        }
+      >
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
       </Route>
+
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
