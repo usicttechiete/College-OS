@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Filter, RefreshCw, SlidersHorizontal } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
+import { foundApi, type FoundItem } from '../lib/api'
 import ItemCard from '../components/ItemCard'
 import Button from '../components/ui/Button'
-import { mockFoundItems } from '../data/foundItems'
-import type { FoundItem } from '../types'
 import { microcopy } from '../copy'
 
 type FilterKey = 'category' | 'time' | 'location'
@@ -23,38 +23,86 @@ const advancedFilters: Record<FilterKey, string[]> = {
   location: ['All', 'Library', 'Cafeteria', 'Computer Lab', 'Main Auditorium', 'Innovation Center'],
 }
 
-const applyFilters = (items: FoundItem[], filters: Record<FilterKey, string>) => {
-  const now = Date.now()
-  return items.filter((item) => {
-    const matchesCategory = filters.category === 'All' || item.category === filters.category
-    const matchesLocation = filters.location === 'All' || item.location.includes(filters.location)
-
-    let matchesTime = true
-    if (filters.time !== 'Any time') {
-      const diff = now - new Date(item.foundAt).getTime()
-      const oneDay = 1000 * 60 * 60 * 24
-      const timeMap: Record<string, number> = {
-        'Last 24 hours': oneDay,
-        'Last 3 days': oneDay * 3,
-        'Last week': oneDay * 7,
-      }
-      matchesTime = diff <= (timeMap[filters.time] ?? Infinity)
-    }
-
-    return matchesCategory && matchesLocation && matchesTime
-  })
-}
-
 const FoundPage = () => {
+  const { session, user } = useAuth()
+  const [items, setItems] = useState<FoundItem[]>([])
   const [filters, setFilters] = useState<Record<FilterKey, string>>({
     category: 'All',
     location: 'All',
     time: 'Any time',
   })
   const [showAdvanced, setShowAdvanced] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [claimingItemId, setClaimingItemId] = useState<string | null>(null)
+  const [claimSuccess, setClaimSuccess] = useState<string | null>(null)
 
-  const filteredItems = useMemo(() => applyFilters(mockFoundItems, filters), [filters])
+  // Convert frontend filters to API query parameters
+  const getApiParams = useMemo(() => {
+    const params: Record<string, string | number> = {}
+    
+    if (filters.category !== 'All') {
+      params.category = filters.category
+    }
+    
+    if (filters.location !== 'All') {
+      params.location = filters.location
+    }
+
+    // Time filter is handled on frontend for now (can be moved to backend later)
+    // params.sortBy = 'foundAt'
+    // params.sortOrder = 'desc'
+    
+    return params
+  }, [filters.category, filters.location])
+
+  // Fetch items function (extracted for reuse)
+  const fetchItems = useCallback(async () => {
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const token = session?.access_token || null
+      const response = await foundApi.getAll(token, getApiParams)
+
+      if (response.success && response.data) {
+        let fetchedItems = response.data.items
+
+        // Apply time filter on frontend (can be moved to backend later)
+        if (filters.time !== 'Any time') {
+          const now = Date.now()
+          const oneDay = 1000 * 60 * 60 * 24
+          const timeMap: Record<string, number> = {
+            'Last 24 hours': oneDay,
+            'Last 3 days': oneDay * 3,
+            'Last week': oneDay * 7,
+          }
+          const timeLimit = timeMap[filters.time] ?? Infinity
+          
+          fetchedItems = fetchedItems.filter((item) => {
+            const diff = now - new Date(item.foundAt).getTime()
+            return diff <= timeLimit
+          })
+        }
+
+        setItems(fetchedItems)
+      } else {
+        setError(response.error || 'Failed to load found items')
+        setItems([])
+      }
+    } catch (err) {
+      console.error('Error fetching found items:', err)
+      setError('An unexpected error occurred. Please try again.')
+      setItems([])
+    } finally {
+      setIsLoading(false)
+    }
+  }, [session, getApiParams, filters.time])
+
+  // Fetch items from API
+  useEffect(() => {
+    fetchItems()
+  }, [fetchItems])
 
   const toggleFilter = (chipId: string) => {
     const chip = quickFilters.find((item) => item.id === chipId)
@@ -68,8 +116,58 @@ const FoundPage = () => {
 
   const resetFilters = () => {
     setFilters({ category: 'All', location: 'All', time: 'Any time' })
-    setIsLoading(true)
-    window.setTimeout(() => setIsLoading(false), 200)
+  }
+
+  // Handle claim button click
+  const handleClaim = async (item: FoundItem) => {
+    if (!session?.access_token) {
+      setError('You must be logged in to claim an item')
+      return
+    }
+
+    if (!user) {
+      setError('Please log in to claim items')
+      return
+    }
+
+    // Check if user is trying to claim their own item
+    if (item.finderId === user.id) {
+      setError('You cannot claim your own found item')
+      return
+    }
+
+    // Check if item is already claimed
+    if (item.status !== 'available') {
+      setError('This item is no longer available for claiming')
+      return
+    }
+
+    setClaimingItemId(item.id)
+    setError(null)
+    setClaimSuccess(null)
+
+    try {
+      const response = await foundApi.claim(session.access_token, item.id)
+
+      if (response.success) {
+        setClaimSuccess(`Successfully claimed "${item.title}"! The finder has been notified.`)
+        
+        // Refresh the items list to show updated status
+        await fetchItems()
+        
+        // Clear success message after 5 seconds
+        setTimeout(() => {
+          setClaimSuccess(null)
+        }, 5000)
+      } else {
+        setError(response.error || 'Failed to claim item. Please try again.')
+      }
+    } catch (err) {
+      console.error('Error claiming item:', err)
+      setError('An unexpected error occurred. Please try again.')
+    } finally {
+      setClaimingItemId(null)
+    }
   }
 
   return (
@@ -90,7 +188,7 @@ const FoundPage = () => {
           </button>
         </div>
         <p className="text-sm text-neutral-500">
-          Swipe left to claim, right to save. {filteredItems.length} results.
+          Swipe left to claim, right to save. {isLoading ? 'Loading...' : `${items.length} results.`}
         </p>
       </header>
 
@@ -146,7 +244,19 @@ const FoundPage = () => {
           </div>
         )}
 
-        {!isLoading && filteredItems.length === 0 && (
+        {error && (
+          <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+            {error}
+          </div>
+        )}
+
+        {claimSuccess && (
+          <div className="rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+            {claimSuccess}
+          </div>
+        )}
+
+        {!isLoading && !error && items.length === 0 && (
           <p className="rounded-lg bg-surface-flat px-4 py-6 text-center text-sm text-neutral-500">
             {microcopy.emptyFound}
           </p>
@@ -154,8 +264,18 @@ const FoundPage = () => {
 
         <div className="space-y-3">
           {!isLoading &&
-            filteredItems.map((item) => (
-              <ItemCard key={item.id} item={item} onDetails={() => {}} onClaim={() => {}} onSave={() => {}} onMessage={() => {}} />
+            !error &&
+            items.map((item) => (
+              <ItemCard 
+                key={item.id} 
+                item={item} 
+                onDetails={() => {}} 
+                onClaim={handleClaim} 
+                onSave={() => {}} 
+                onMessage={() => {}}
+                isClaiming={claimingItemId === item.id}
+                canClaim={item.status === 'available' && user?.id !== item.finderId}
+              />
             ))}
         </div>
       </div>

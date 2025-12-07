@@ -4,6 +4,7 @@ const env = require('./config/env');
 
 // Import routes
 const authRoutes = require('./routes/auth');
+const foundRoutes = require('./routes/found');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get('/health', (req, res) => {
 
 // API Routes
 app.use('/auth', authRoutes);
+app.use('/found', foundRoutes);
 
 // 404 handler
 app.use((req, res) => {

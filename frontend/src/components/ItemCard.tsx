@@ -9,6 +9,8 @@ interface ItemCardProps {
   onClaim?: (item: FoundItem) => void
   onSave?: (item: FoundItem) => void
   onMessage?: (item: FoundItem) => void
+  isClaiming?: boolean
+  canClaim?: boolean
 }
 
 const statusStyles: Record<FoundItem['status'], string> = {
@@ -20,7 +22,7 @@ const statusStyles: Record<FoundItem['status'], string> = {
   closed: 'bg-gradient-to-br from-neutral-100 to-neutral-50 text-neutral-500 border border-neutral-200',
 }
 
-const ItemCard = ({ item, onDetails, onClaim, onSave, onMessage }: ItemCardProps) => {
+const ItemCard = ({ item, onDetails, onClaim, onSave, onMessage, isClaiming = false, canClaim = true }: ItemCardProps) => {
   const date = new Date(item.foundAt)
   const formatted = date.toLocaleString(undefined, {
     month: 'short',
@@ -29,11 +31,15 @@ const ItemCard = ({ item, onDetails, onClaim, onSave, onMessage }: ItemCardProps
     minute: '2-digit',
   })
 
+  // Determine if claim button should be shown and enabled
+  const showClaimButton = item.status === 'available' || item.status === 'matched'
+  const isClaimButtonDisabled = isClaiming || !canClaim || item.status !== 'available'
+
   return (
     <article className="group relative grid grid-cols-[104px_1fr] gap-3 overflow-hidden rounded-lg bg-white p-3 shadow-soft border border-cyan-200/50 transition-all duration-150 ease-in-out-200 hocus:-translate-y-0.5">
       <div className="relative overflow-hidden rounded-md">
         <img
-          src={item.imageUrl}
+          src={item.imageUrls && item.imageUrls.length > 0 ? item.imageUrls[0] : 'https://via.placeholder.com/400x300?text=No+Image'}
           alt={item.title}
           className="h-full w-full min-h-[128px] object-cover"
           loading="lazy"
@@ -66,7 +72,7 @@ const ItemCard = ({ item, onDetails, onClaim, onSave, onMessage }: ItemCardProps
 
         <p className="line-clamp-2 text-sm text-neutral-500">{item.description}</p>
 
-        <dl className="grid grid-cols-2 gap-2 text-xs text-neutral-600">
+        <dl className={`grid gap-2 text-xs text-neutral-600 ${item.distanceMinutes !== undefined ? 'grid-cols-2' : 'grid-cols-2'}`}>
           <div className="flex items-center gap-2">
             <MapPin className="size-4 text-secondary" aria-hidden="true" />
             <span>{item.location}</span>
@@ -75,10 +81,14 @@ const ItemCard = ({ item, onDetails, onClaim, onSave, onMessage }: ItemCardProps
             <Clock3 className="size-4 text-neutral-500" aria-hidden="true" />
             <span>{formatted}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <MessageCircle className="size-4 text-accent" aria-hidden="true" />
-            <span>{item.distanceMinutes} mins away</span>
-          </div>
+          {item.distanceMinutes !== undefined ? (
+            <div className="flex items-center gap-2">
+              <MessageCircle className="size-4 text-accent" aria-hidden="true" />
+              <span>{item.distanceMinutes} mins away</span>
+            </div>
+          ) : (
+            <div />
+          )}
           <div className="flex items-center gap-2 justify-end text-success">
             <HandHeart className="size-4" aria-hidden="true" />
             <span className="font-semibold">{item.verification.matchConfidence}% match</span>
@@ -125,15 +135,22 @@ const ItemCard = ({ item, onDetails, onClaim, onSave, onMessage }: ItemCardProps
         </div>
 
         <div className="flex items-center justify-between pt-1">
-          <Button
-            variant="primary"
-            size="sm"
-            iconLeft={<HandHeart className="size-4" />}
-            onClick={() => onClaim?.(item)}
-            aria-label={`Claim ${item.title}`}
-          >
-            Claim
-          </Button>
+          {showClaimButton ? (
+            <Button
+              variant="primary"
+              size="sm"
+              iconLeft={<HandHeart className="size-4" />}
+              onClick={() => onClaim?.(item)}
+              disabled={isClaimButtonDisabled}
+              aria-label={`Claim ${item.title}`}
+            >
+              {isClaiming ? 'Claiming...' : item.status === 'matched' ? 'Claimed' : 'Claim'}
+            </Button>
+          ) : (
+            <div className="text-xs text-neutral-500 px-3 py-2">
+              {item.status === 'returned' ? 'Returned' : 'Not available'}
+            </div>
+          )}
           <Button
             variant="ghost"
             size="sm"
