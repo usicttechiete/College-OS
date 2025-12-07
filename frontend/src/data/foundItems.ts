@@ -13,6 +13,18 @@ export const mockFoundItems: FoundItem[] = [
       'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80',
     submissionType: 'keep-with-me',
     status: 'available',
+    finder: {
+      name: 'Arjun Mehta',
+      avatarUrl: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=256&q=80',
+      trustScore: 92,
+      isTrustedHelper: true,
+    },
+    distanceMinutes: 6,
+    verification: {
+      verified: true,
+      notes: 'Owner must mention laptop sticker set.',
+      matchConfidence: 84,
+    },
   },
   {
     id: 'f-002',
@@ -26,6 +38,18 @@ export const mockFoundItems: FoundItem[] = [
       'https://images.unsplash.com/photo-1585386959984-a4155228ef44?auto=format&fit=crop&w=800&q=80',
     submissionType: 'submit-to-desk',
     status: 'matched',
+    finder: {
+      name: 'Student Cell Desk',
+      avatarUrl: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=256&q=80',
+      trustScore: 100,
+      isTrustedHelper: true,
+    },
+    distanceMinutes: 12,
+    verification: {
+      verified: true,
+      notes: 'Awaiting claimant to bring proof of purchase.',
+      matchConfidence: 91,
+    },
   },
   {
     id: 'f-003',
@@ -38,7 +62,19 @@ export const mockFoundItems: FoundItem[] = [
     imageUrl:
       'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80',
     submissionType: 'keep-with-me',
-    status: 'available',
+    status: 'verification-pending',
+    finder: {
+      name: 'Nisha Rao',
+      avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=256&q=80',
+      trustScore: 78,
+      isTrustedHelper: false,
+    },
+    distanceMinutes: 9,
+    verification: {
+      verified: false,
+      notes: 'Waiting for claimant to describe unique keycap colours.',
+      matchConfidence: 62,
+    },
   },
   {
     id: 'f-004',
@@ -52,5 +88,17 @@ export const mockFoundItems: FoundItem[] = [
       'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80',
     submissionType: 'submit-to-desk',
     status: 'returned',
+    finder: {
+      name: 'Campus Security',
+      avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80',
+      trustScore: 88,
+      isTrustedHelper: true,
+    },
+    distanceMinutes: 15,
+    verification: {
+      verified: true,
+      notes: 'Returned after ID confirmation at Student Cell.',
+      matchConfidence: 99,
+    },
   },
 ]

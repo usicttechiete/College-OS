@@ -6,9 +6,9 @@ const LoginPage = () => {
   return (
     <section className="space-y-8">
       <header className="space-y-2 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-[var(--color-muted)]">Welcome back</p>
-        <h1 className="text-2xl font-semibold text-[var(--color-brand-foreground)]">Log in to continue</h1>
-        <p className="text-sm text-[var(--color-muted)]">Access your lost queries, found posts, and campus messages.</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-purple-600">Welcome back</p>
+        <h1 className="text-2xl font-semibold bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">Log in to continue</h1>
+        <p className="text-sm text-neutral-600">Access your lost queries, found posts, and campus messages.</p>
       </header>
 
       <form className="space-y-4" onSubmit={(event) => event.preventDefault()}>
@@ -19,13 +19,13 @@ const LoginPage = () => {
         </Button>
       </form>
 
-      <footer className="flex flex-col items-center gap-2 text-sm text-[var(--color-muted)]">
-        <button type="button" className="text-xs font-medium text-[var(--color-brand-foreground)] underline">
+      <footer className="flex flex-col items-center gap-2 text-sm text-neutral-600">
+        <button type="button" className="text-xs font-medium text-purple-600 underline hover:text-purple-700">
           Forgot password?
         </button>
         <p>
           Don&apos;t have an account?{' '}
-          <Link to="/signup" className="font-semibold text-[var(--color-brand-foreground)]">
+          <Link to="/signup" className="font-semibold text-purple-600 hover:text-purple-700">
             Sign up
           </Link>
         </p>

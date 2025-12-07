@@ -10,8 +10,8 @@ const LostFormPage = () => {
   return (
     <section className="space-y-6">
       <header className="space-y-2">
-        <h1 className="text-xl font-semibold text-[var(--color-brand-foreground)]">Raise a lost query</h1>
-        <p className="text-sm text-[var(--color-muted)]">Provide details so the community can watch out for your item.</p>
+        <h1 className="text-xl font-semibold bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">Raise a lost query</h1>
+        <p className="text-sm text-neutral-600">Provide details so the community can watch out for your item.</p>
       </header>
 
       <form className="space-y-5" onSubmit={(event) => event.preventDefault()}>

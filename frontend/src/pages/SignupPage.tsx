@@ -10,9 +10,9 @@ const SignupPage = () => {
   return (
     <section className="space-y-8">
       <header className="space-y-2 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-[var(--color-muted)]">Join the circle</p>
-        <h1 className="text-2xl font-semibold text-[var(--color-brand-foreground)]">Create your account</h1>
-        <p className="text-sm text-[var(--color-muted)]">
+        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-purple-600">Join the circle</p>
+        <h1 className="text-2xl font-semibold bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">Create your account</h1>
+        <p className="text-sm text-neutral-600">
           Track your lost items, post found belongings, and build your trust score.
         </p>
       </header>
@@ -54,9 +54,9 @@ const SignupPage = () => {
         </Button>
       </form>
 
-      <footer className="text-center text-sm text-[var(--color-muted)]">
+      <footer className="text-center text-sm text-neutral-600">
         Already have an account?{' '}
-        <Link to="/login" className="font-semibold text-[var(--color-brand-foreground)]">
+        <Link to="/login" className="font-semibold text-purple-600 hover:text-purple-700">
           Log in
         </Link>
       </footer>
