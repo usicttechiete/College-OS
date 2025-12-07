@@ -28,12 +28,12 @@ const TopBar = () => {
   return (
     <header className="fixed inset-x-0 top-0 z-[var(--z-sticky,40)] flex justify-center px-4">
       <div
-        className={`flex w-full max-w-md items-center justify-between gap-3 rounded-b-[20px] border border-purple-200/50 bg-gradient-to-r from-purple-50/95 via-blue-50/95 to-indigo-50/95 px-4 shadow-colored backdrop-blur-md transition-all duration-200 ease-in-out-200 ${
+        className={`flex w-full max-w-md items-center justify-between gap-3 rounded-b-[20px] border border-primary/20 bg-gradient-to-r from-blue-50/95 via-cyan-50/95 to-indigo-50/95 px-4 shadow-soft backdrop-blur-md transition-all duration-200 ease-in-out-200 ${
           isCondensed ? 'py-3' : 'py-4'
         }`}
       >
         <div className="flex items-center gap-3">
-          <span className="inline-flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-secondary text-white shadow-soft">
+          <span className="inline-flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent text-white shadow-soft">
             <ShieldCheck className="size-5" aria-hidden="true" />
           </span>
           <div className="flex flex-col">
@@ -50,7 +50,7 @@ const TopBar = () => {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            className="relative flex size-11 items-center justify-center rounded-full bg-gradient-to-br from-amber-100 to-orange-100 text-amber-700 transition-transform duration-150 ease-in-out-200 hocus:-translate-y-0.5 hocus:shadow-colored"
+            className="relative flex size-11 items-center justify-center rounded-full bg-gradient-to-br from-amber-50 to-orange-50 text-amber-700 transition-transform duration-150 ease-in-out-200 hocus:-translate-y-0.5 hocus:shadow-soft"
             aria-label={unreadCount ? `Notifications (${unreadCount} unread)` : 'Notifications'}
           >
             <Bell className="size-5" aria-hidden="true" />
@@ -62,7 +62,7 @@ const TopBar = () => {
           </button>
           <button
             type="button"
-            className="flex size-11 items-center justify-center rounded-full bg-gradient-to-br from-emerald-100 to-teal-100 shadow-soft transition-transform duration-150 ease-in-out-200 hocus:-translate-y-0.5 ring-2 ring-emerald-200/50"
+            className="flex size-11 items-center justify-center rounded-full bg-gradient-to-br from-emerald-50 to-cyan-50 shadow-soft transition-transform duration-150 ease-in-out-200 hocus:-translate-y-0.5 ring-2 ring-emerald-200/30"
             aria-label={`Open account menu for ${user?.name ?? 'your account'}`}
           >
             <img

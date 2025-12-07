@@ -9,8 +9,8 @@ const AppLayout = () => {
   const hideChrome = authRoutes.includes(location.pathname)
 
   return (
-    <div className="flex min-h-screen w-full justify-center bg-neutral-0 text-neutral-700 dark:bg-neutral-0">
-      <div className="flex w-full max-w-md flex-col bg-transparent">
+    <div className="flex min-h-screen w-full justify-center bg-neutral-50 md:bg-white text-neutral-700 dark:bg-neutral-50 md:dark:bg-white">
+      <div className="flex w-full max-w-md flex-col bg-neutral-50 md:bg-neutral-50">
         {!hideChrome && <TopBar />}
         <main className="flex flex-1 flex-col px-4 pb-28 pt-24">
           <Outlet />

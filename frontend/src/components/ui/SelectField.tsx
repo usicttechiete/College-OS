@@ -9,10 +9,10 @@ interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement> {
 const SelectField = ({ label, hint, className, children, ...props }: SelectFieldProps) => {
   return (
     <label className="flex w-full flex-col gap-1 text-sm text-neutral-600">
-      <span className="font-semibold text-purple-700">{label}</span>
+      <span className="font-semibold text-primary">{label}</span>
       <select
         className={clsx(
-          'h-11 w-full rounded-2xl border border-purple-200/60 bg-gradient-to-br from-white to-purple-50/30 px-4 text-neutral-700 shadow-soft outline-none transition focus:border-purple-400 focus:ring-4 focus:ring-purple-200/50 focus:from-white focus:to-indigo-50/50',
+          'h-11 w-full rounded-2xl border border-neutral-200/60 bg-white px-4 text-neutral-700 shadow-soft outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10',
           className,
         )}
         {...props}

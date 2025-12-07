@@ -5,55 +5,72 @@
   color-scheme: light;
   --font-sans: "Inter", "SF Pro Display", "Segoe UI", -apple-system, system-ui, sans-serif;
   
-  /* Premium Color Palette - Rich & Trustworthy */
-  --color-primary: #1e3a8a;
+  /* Premium Trust-Focused Color Palette - Sophisticated & Differentiated */
+  /* Primary: Deep Navy - Trust & Authority */
+  --color-primary: #1e40af;
   --color-primary-foreground: #ffffff;
   --color-primary-light: #3b82f6;
   --color-primary-lighter: #dbeafe;
+  --color-primary-dark: #1e3a8a;
   
-  --color-secondary: #6366f1;
-  --color-secondary-light: #818cf8;
-  --color-secondary-lighter: #e0e7ff;
+  /* Secondary: Teal - Fresh & Reliable */
+  --color-secondary: #0891b2;
+  --color-secondary-light: #06b6d4;
+  --color-secondary-lighter: #cffafe;
+  --color-secondary-dark: #0e7490;
   
+  /* Success: Emerald - Growth & Achievement */
   --color-success: #059669;
   --color-success-light: #10b981;
   --color-success-lighter: #d1fae5;
+  --color-success-dark: #047857;
   
+  /* Warning: Amber - Attention & Warmth */
   --color-warning: #d97706;
   --color-warning-light: #f59e0b;
   --color-warning-lighter: #fef3c7;
+  --color-warning-dark: #b45309;
   
-  --color-danger: #dc2626;
-  --color-danger-light: #ef4444;
-  --color-danger-lighter: #fee2e2;
+  /* Danger: Rose - Urgency & Action */
+  --color-danger: #e11d48;
+  --color-danger-light: #f43f5e;
+  --color-danger-lighter: #ffe4e6;
+  --color-danger-dark: #be123c;
   
-  --color-accent: #a855f7;
-  --color-accent-light: #c084fc;
-  --color-accent-lighter: #f3e8ff;
+  /* Accent: Indigo - Premium & Depth */
+  --color-accent: #4f46e5;
+  --color-accent-light: #6366f1;
+  --color-accent-lighter: #e0e7ff;
+  --color-accent-dark: #4338ca;
   
-  --color-gold: #f59e0b;
-  --color-gold-light: #fbbf24;
-  --color-gold-lighter: #fef3c7;
-  
+  /* Purple: Luxury & Innovation */
   --color-purple: #7c3aed;
   --color-purple-light: #8b5cf6;
   --color-purple-lighter: #ede9fe;
+  --color-purple-dark: #6d28d9;
   
+  /* Gold: Excellence & Value */
+  --color-gold: #d97706;
+  --color-gold-light: #f59e0b;
+  --color-gold-lighter: #fef3c7;
+  
+  /* Neutrals: Off-white base for premium feel */
   --color-neutral-0: #ffffff;
-  --color-neutral-50: #f8fafc;
-  --color-neutral-100: #f1f5f9;
-  --color-neutral-200: #e2e8f0;
-  --color-neutral-300: #cbd5e1;
-  --color-neutral-500: #64748b;
-  --color-neutral-700: #1e293b;
+  --color-neutral-50: #faf9f7;
+  --color-neutral-100: #f5f4f2;
+  --color-neutral-200: #e8e6e3;
+  --color-neutral-300: #d6d3d1;
+  --color-neutral-500: #78716c;
+  --color-neutral-700: #292524;
   
-  --surface-flat: #ffffff;
+  /* Surfaces: Off-white with subtle warmth */
+  --surface-flat: #faf9f7;
   --surface-raised: #ffffff;
-  --surface-floating: linear-gradient(135deg, #1e3a8a 0%, #6366f1 50%, #7c3aed 100%);
+  --surface-floating: linear-gradient(135deg, #1e40af 0%, #0891b2 50%, #4f46e5 100%);
   
-  --shadow-soft: 0 10px 28px rgba(30, 58, 138, 0.08);
-  --shadow-strong: 0 24px 48px rgba(30, 58, 138, 0.15);
-  --shadow-colored: 0 8px 24px rgba(99, 102, 241, 0.2);
+  --shadow-soft: 0 10px 28px rgba(30, 64, 175, 0.08);
+  --shadow-strong: 0 24px 48px rgba(30, 64, 175, 0.12);
+  --shadow-colored: 0 8px 24px rgba(79, 70, 229, 0.15);
   
   --radius-sm: 6px;
   --radius-md: 12px;
@@ -67,6 +84,13 @@
   --z-toast: 110;
   --body-bg: var(--surface-flat);
   --body-color: var(--color-neutral-700);
+  
+  /* Section-specific colors for differentiation */
+  --section-trust: #1e40af;
+  --section-found: #0891b2;
+  --section-lost: #4f46e5;
+  --section-messages: #7c3aed;
+  --section-account: #059669;
 }
 
 :root[data-theme='dark'] {
@@ -111,11 +135,25 @@ body {
   justify-content: center;
 }
 
+/* Mobile-only background color - white on larger screens */
+@media (min-width: 768px) {
+  body {
+    background: #ffffff;
+  }
+}
+
 #root {
   min-height: 100vh;
   width: 100%;
   display: flex;
   background: var(--body-bg);
+}
+
+/* Mobile-only background color - white on larger screens */
+@media (min-width: 768px) {
+  #root {
+    background: #ffffff;
+  }
 }
 
 a {
@@ -202,13 +240,13 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  background: linear-gradient(180deg, #1e40af 0%, #0891b2 50%, #4f46e5 100%);
   border-radius: 10px;
   border: 2px solid var(--color-neutral-100);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--color-primary-light) 0%, var(--color-secondary-light) 100%);
+  background: linear-gradient(180deg, #3b82f6 0%, #06b6d4 50%, #6366f1 100%);
 }
 
 /* Firefox scrollbar */
@@ -233,10 +271,10 @@ button {
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #6366f1 0%, #7c3aed 100%);
+  background: linear-gradient(180deg, #0891b2 0%, #4f46e5 100%);
   border-radius: 10px;
 }
 
 .scroll-container::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #818cf8 0%, #a855f7 100%);
+  background: linear-gradient(180deg, #06b6d4 0%, #6366f1 100%);
 }

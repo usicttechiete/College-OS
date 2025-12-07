@@ -10,7 +10,7 @@ const FoundFormPage = () => {
   return (
     <section className="space-y-6">
       <header className="space-y-2">
-        <h1 className="text-xl font-semibold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Post a found item</h1>
+        <h1 className="text-xl font-semibold bg-gradient-to-r from-secondary to-cyan-500 bg-clip-text text-transparent">Post a found item</h1>
         <p className="text-sm text-neutral-600">
           Share details so the rightful owner can identify and reclaim their belonging.
         </p>

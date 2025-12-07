@@ -82,7 +82,7 @@ const FoundPage = () => {
           </div>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-purple-100 to-indigo-100 text-purple-700 shadow-soft hover:from-purple-200 hover:to-indigo-200"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-cyan-100 to-teal-100 text-cyan-700 shadow-soft hover:from-cyan-200 hover:to-teal-200"
             onClick={() => setShowAdvanced(true)}
             aria-label="Open advanced filters"
           >
@@ -94,7 +94,7 @@ const FoundPage = () => {
         </p>
       </header>
 
-      <div className="rounded-[16px] border border-purple-200/50 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 px-4 py-3 shadow-soft">
+      <div className="rounded-[16px] border border-cyan-200/50 bg-white px-4 py-3 shadow-soft">
         <div className="flex gap-2 overflow-x-auto pb-1 scroll-container">
           {quickFilters.map((chip) => {
             const isActive = Object.entries(chip.filter).every(([key, value]) => value && filters[key as FilterKey] === value)
@@ -105,21 +105,21 @@ const FoundPage = () => {
                 onClick={() => toggleFilter(chip.id)}
                 className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition-all ${
                   isActive
-                    ? 'border-purple-400 bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700 shadow-colored'
-                    : 'border-transparent bg-gradient-to-br from-white to-neutral-50 text-neutral-600 shadow-soft hover:from-purple-50 hover:to-indigo-50'
+                    ? 'border-cyan-400 bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 shadow-soft'
+                    : 'border-transparent bg-neutral-50 text-neutral-600 shadow-soft hover:bg-cyan-50/50'
                 }`}
                 aria-pressed={isActive}
               >
                 <Filter className="size-3" aria-hidden="true" />
                 {chip.label}
-                {chip.pill && <span className="rounded-full bg-gradient-to-r from-primary to-secondary text-[10px] text-primary-foreground px-1.5 py-0.5 shadow-soft">{chip.pill}</span>}
+                {chip.pill && <span className="rounded-full bg-gradient-to-r from-secondary to-cyan-500 text-[10px] text-white px-1.5 py-0.5 shadow-soft">{chip.pill}</span>}
               </button>
             )
           })}
           <button
             type="button"
             onClick={() => setShowAdvanced(true)}
-            className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-gradient-to-br from-white to-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-700 hover:from-indigo-50 hover:to-purple-50"
+            className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-3 py-2 text-xs font-semibold text-cyan-700 hover:bg-cyan-50"
           >
             <SlidersHorizontal className="size-3" aria-hidden="true" /> More
           </button>
@@ -160,8 +160,8 @@ const FoundPage = () => {
         </div>
       </div>
       {showAdvanced && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-end bg-purple-900/30 backdrop-blur-sm">
-          <div className="rounded-t-[20px] bg-gradient-to-b from-white via-purple-50/50 to-indigo-50/50 p-5 shadow-strong border-t border-purple-200/50">
+        <div className="fixed inset-0 z-50 flex flex-col justify-end bg-neutral-700/30 backdrop-blur-sm">
+          <div className="rounded-t-[20px] bg-white p-5 shadow-strong border-t border-neutral-200/50">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-neutral-700">Advanced filters</h2>
               <button
@@ -192,7 +192,7 @@ const FoundPage = () => {
                             }))
                           }
                           className={`rounded-md border px-3 py-2 text-sm font-medium transition ${
-                            isActive ? 'border-purple-400 bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700 shadow-soft' : 'border-neutral-200 bg-gradient-to-br from-white to-neutral-50 text-neutral-600 hover:from-purple-50 hover:to-indigo-50'
+                            isActive ? 'border-cyan-400 bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 shadow-soft' : 'border-neutral-200 bg-neutral-50 text-neutral-600 hover:bg-cyan-50/50'
                           }`}
                           aria-pressed={isActive}
                         >

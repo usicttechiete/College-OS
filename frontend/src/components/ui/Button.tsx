@@ -15,13 +15,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-gradient-to-r from-primary via-secondary to-purple-600 text-primary-foreground shadow-colored transition-transform duration-150 ease-in-out-200 hocus:-translate-y-0.5 hocus:shadow-strong hocus:from-primary-light hocus:via-secondary-light hocus:to-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+    'bg-gradient-to-r from-primary via-accent to-secondary text-primary-foreground shadow-soft transition-transform duration-150 ease-in-out-200 hocus:-translate-y-0.5 hocus:shadow-strong hocus:from-primary-light hocus:via-accent-light hocus:to-secondary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
   secondary:
-    'bg-gradient-to-br from-indigo-50 to-purple-50 text-primary border border-indigo-200 shadow-soft hocus:from-indigo-100 hocus:to-purple-100 hocus:border-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+    'bg-gradient-to-br from-cyan-50 to-teal-50 text-cyan-700 border border-cyan-200 shadow-soft hocus:from-cyan-100 hocus:to-teal-100 hocus:border-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500',
   ghost:
-    'bg-transparent text-primary hocus:bg-gradient-to-br hocus:from-purple-50 hocus:to-indigo-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+    'bg-transparent text-primary hocus:bg-blue-50/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
   surface:
-    'bg-gradient-to-br from-emerald-50 to-teal-50 text-emerald-700 border border-emerald-200 shadow-soft hocus:from-emerald-100 hocus:to-teal-100 hocus:border-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500',
+    'bg-gradient-to-br from-emerald-50 to-cyan-50 text-emerald-700 border border-emerald-200 shadow-soft hocus:from-emerald-100 hocus:to-cyan-100 hocus:border-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500',
 }
 
 const sizeStyles: Record<ButtonSize, string> = {

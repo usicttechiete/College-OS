@@ -7,22 +7,22 @@ const MessagesPage = () => {
     <section className="space-y-5">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Messages</h1>
+          <h1 className="text-xl font-semibold bg-gradient-to-r from-primary via-purple-500 to-accent bg-clip-text text-transparent">Messages</h1>
           <p className="text-sm text-neutral-600">Coordinate handovers with finders and claimants.</p>
         </div>
-        <MessageSquare className="size-6 text-purple-600" />
+        <MessageSquare className="size-6 text-purple-500" />
       </header>
 
       <div className="space-y-3">
         {mockThreads.map((thread) => (
-          <article key={thread.id} className="rounded-3xl bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-5 shadow-soft border border-purple-200/50">
+          <article key={thread.id} className="rounded-3xl bg-white p-5 shadow-soft border border-purple-200/50">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-sm font-semibold text-purple-700">{thread.peerName}</h2>
+                <h2 className="text-sm font-semibold text-purple-600">{thread.peerName}</h2>
                 <p className="text-xs text-neutral-600">Regarding {thread.itemTitle}</p>
               </div>
               {thread.unreadCount > 0 && (
-                <span className="rounded-full bg-gradient-to-r from-primary to-secondary px-3 py-1 text-xs font-semibold text-white shadow-soft">
+                <span className="rounded-full bg-gradient-to-r from-primary via-accent to-secondary px-3 py-1 text-xs font-semibold text-white shadow-soft">
                   {thread.unreadCount} new
                 </span>
               )}
